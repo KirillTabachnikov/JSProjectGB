@@ -5,16 +5,21 @@ const goods = [
   { title: 'Shoes', price: 250 },
 ];
 
-const GET_GOODS_ITEMS = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json'
-const GET_BASKET_GOODS_ITEMS = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/getBasket.json'
+const BASE_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/';
+const GET_GOODS_ITEMS = `${BASE_URL}catalogData.json`
+const GET_BASKET_GOODS_ITEMS = `${BASE_URL}getBasket.json`
 
-function service(url, callback) {
-  xhr = new XMLHttpRequest();
-  xhr.open('GET', url);
-  xhr.send();
-  xhr.onload = () => {
-    callback(JSON.parse(xhr.response))
-  }
+function service(url) {
+  return new Promise((resolve) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', url);
+    xhr.send();
+    xhr.onload = () => {
+      if (xhr.readyState === 4) {
+        resolve(JSON.parse(xhr.response))
+      }
+    }
+  })
 }
 
 class GoodsItem {
@@ -34,17 +39,19 @@ class GoodsItem {
 }
 class GoodsList {
   items = [];
-  fetchGoods(callback) {
-    service(GET_GOODS_ITEMS, (data) => {
+  filteredItems = [];
+  fetchGoods() {
+    const prom = service(GET_GOODS_ITEMS);
+    prom.then((data) => {
       this.items = data;
-      callback()
+      this.filteredItems = data;
     });
+
+    return prom;
   }
 
   sumPrice() {
-    const sum = this.items.reduce((previousValue, { price }) => {
-      return previousValue + price;
-    }, 0);
+    const sum = this.items.reduce((previousValue, { price }) => previousValue + price, 0);
     document.querySelector('.goods-sum').innerHTML = sum;
   }
 
@@ -60,9 +67,19 @@ class GoodsList {
   }
 }
 
+class BasketGoodsList {
+  items = [];
+  fetchGoods() {
+    service(GET_BASKET_GOODS_ITEMS, (data) => {
+      this.items = data.contents;
+    });
+  }
+}
 
+const basketGoodsList = new BasketGoodsList();
+basketGoodsList.fetchGoods();
 const goodsList = new GoodsList();
 const basketSum = goodsList.sumPrice();
-goodsList.fetchGoods(() => {
+goodsList.fetchGoods().then(() => {
   goodsList.render();
 });
