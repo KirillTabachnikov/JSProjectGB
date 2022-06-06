@@ -1,26 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<link rel="stylesheet" href="style.scss">
-<html>
 
 <head>
     <meta charset="UTF-8">
     <title>YourShop</title>
     <link rel="stylesheet" href="style.css">
-    <title>YourShop</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <script src="index.js"></script>
 </head>
 
 <body>
-    <header>
-        <h1 class="title">YourShop</h1>
-        <div class="actions">
-            <button class="cart-button" type="button">Корзина</button>
-        </div>
-    </header>
-    <main>
-        <div class="goods-list"></div>
-    </main>
-    <script src="index.js"></script>
+    <div id="root">
+        <header>
+            <h1 class="title">YourShop</h1>
+            <div class="search">
+                <input type="text" class="goods-search" v-model="search" />
+                <custom-button v-on:click="filterItems">Искать</custom-button>
+            </div>
+            <div class="actions">
+                <custom-button v-on:click="setVisionCard">Корзина</custom-button>
+            </div>
+        </header>
+        <main>
+            <div class="goods-list">
+                <goods-item v-for="item in filteredItems" v-bind:item="item"></goods-item>
+            </div>
+        </main>
+        <basket-goods v-if="cardIsVision" v-on:closeclick="setVisionCard"></basket-goods>
+        <div>{{ calculatePrice }}</div>
+    </div>
 </body>
 
 </html>
