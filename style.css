@@ -76,18 +76,40 @@ button {
 }
 
 .basket-card {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  width: 80%;
+  height: 80%;
+  background-color: white;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: max-content auto;
+      grid-template-rows: -webkit-max-content auto;
+      grid-template-rows: max-content auto;
+}
+
+.basket-card__header {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: auto max-content;
+      grid-template-columns: auto -webkit-max-content;
+      grid-template-columns: auto max-content;
+}
+
+.basket-card__header__title {
+  padding: 10px;
+}
+
+.basket-card__header__delete-icon {
+  background-image: url("img/delete_icon.png");
+  background-size: contain;
+  width: 30px;
+  height: 30px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.basket-card__content {
+  padding: 10px;
 }
 /*# sourceMappingURL=style.css.map */
