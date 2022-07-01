@@ -17,6 +17,7 @@ body,
       grid-template-rows: -webkit-max-content auto;
       grid-template-rows: max-content auto;
   gap: 40px;
+  position: relative;
 }
 
 header {
@@ -30,7 +31,6 @@ header {
 }
 
 .title {
-  font-size: 57px;
   color: white;
   padding: 10px;
 }
@@ -40,7 +40,7 @@ header {
   padding: 10px;
 }
 
-button {
+.custom-button {
   padding: 10px;
 }
 
@@ -61,18 +61,32 @@ button {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   outline: 1px solid black;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: min-content auto min-content;
+      grid-template-rows: -webkit-min-content auto -webkit-min-content;
+      grid-template-rows: min-content auto min-content;
   gap: 10px;
 }
 
 .goods-search {
   height: 36px;
+}
+
+.fixed-area {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .basket-card {
@@ -111,5 +125,25 @@ button {
 
 .basket-card__content {
   padding: 10px;
+}
+
+.basket-item {
+  padding: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 30px;
+}
+
+.basket-item__title {
+  font-weight: bold;
+}
+
+.basket-item__total {
+  margin-left: 100px;
+}
+
+.basket-item__count button {
+  padding: 0 5px;
 }
 /*# sourceMappingURL=style.css.map */
